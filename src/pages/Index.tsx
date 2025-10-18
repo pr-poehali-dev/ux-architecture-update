@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import Icon from '@/components/ui/icon';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 
 const Index = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,384 +16,394 @@ const Index = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
 
-  const services = [
-    {
-      icon: 'Code2',
-      title: 'Системная интеграция',
-      description: 'Интеграция корпоративных систем и платформ для бесперебойной работы бизнеса'
-    },
-    {
-      icon: 'Database',
-      title: 'Внедрение 1C',
-      description: 'Продажа, внедрение и техническая поддержка решений на базе 1С:Предприятие'
-    },
-    {
-      icon: 'Globe',
-      title: 'Разработка веб-решений',
-      description: 'Создание интернет-магазинов, корпоративных порталов и веб-приложений'
-    },
-    {
-      icon: 'Shield',
-      title: 'Информационная безопасность',
-      description: 'Аудит, внедрение и сопровождение систем защиты информации'
-    },
-    {
-      icon: 'Cloud',
-      title: 'Облачные решения',
-      description: 'Миграция в облако, построение гибридной инфраструктуры'
-    },
-    {
-      icon: 'Headphones',
-      title: 'Техническая поддержка',
-      description: 'Комплексная поддержка ИТ-инфраструктуры 24/7'
-    }
-  ];
-
-  const projects = [
-    {
-      title: 'Автоматизация логистики',
-      client: 'Крупная логистическая компания',
-      description: 'Внедрение системы управления складом и транспортом на базе 1С',
-      tag: '1C'
-    },
-    {
-      title: 'Интернет-магазин электроники',
-      client: 'Розничная сеть',
-      description: 'Разработка высоконагруженного интернет-магазина с интеграцией в учетные системы',
-      tag: 'E-commerce'
-    },
-    {
-      title: 'Корпоративный портал',
-      client: 'Производственное предприятие',
-      description: 'Создание единой информационной среды для 500+ сотрудников',
-      tag: 'Portal'
-    }
-  ];
-
-  const vacancies = [
-    { title: 'Backend разработчик', level: 'Middle/Senior', tech: 'Python, FastAPI' },
-    { title: 'Frontend разработчик', level: 'Middle', tech: 'React, TypeScript' },
-    { title: 'DevOps инженер', level: 'Senior', tech: 'Kubernetes, GitLab CI' }
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+          isScrolled ? 'bg-white shadow-sm' : 'bg-white'
         }`}
       >
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">RS</span>
-              </div>
-              <span className="font-bold text-xl">RunSystems</span>
-            </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between h-20">
+            <div className="text-2xl font-bold tracking-tight">RunSystems</div>
 
-            <nav className="hidden md:flex items-center gap-8">
-              {['Услуги', 'Проекты', 'О компании', 'Карьера', 'Контакты'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
-                  className="text-sm font-medium hover:text-primary transition-colors"
-                >
-                  {item}
-                </button>
-              ))}
+            <nav className="hidden lg:flex items-center gap-10">
+              <button
+                onClick={() => scrollToSection('services')}
+                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+              >
+                Услуги
+              </button>
+              <button
+                onClick={() => scrollToSection('cases')}
+                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+              >
+                Проекты
+              </button>
+              <button
+                onClick={() => scrollToSection('about')}
+                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+              >
+                О компании
+              </button>
+              <button
+                onClick={() => scrollToSection('contacts')}
+                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+              >
+                Контакты
+              </button>
             </nav>
 
-            <Button onClick={() => scrollToSection('контакты')} className="hidden md:flex">
-              Связаться
-            </Button>
+            <button
+              className="lg:hidden flex flex-col gap-1.5"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <span className="w-6 h-0.5 bg-black transition-all"></span>
+              <span className="w-6 h-0.5 bg-black transition-all"></span>
+              <span className="w-6 h-0.5 bg-black transition-all"></span>
+            </button>
           </div>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-white border-t">
+            <nav className="flex flex-col px-6 py-4 gap-4">
+              <button
+                onClick={() => scrollToSection('services')}
+                className="text-left text-sm font-medium text-gray-700"
+              >
+                Услуги
+              </button>
+              <button
+                onClick={() => scrollToSection('cases')}
+                className="text-left text-sm font-medium text-gray-700"
+              >
+                Проекты
+              </button>
+              <button
+                onClick={() => scrollToSection('about')}
+                className="text-left text-sm font-medium text-gray-700"
+              >
+                О компании
+              </button>
+              <button
+                onClick={() => scrollToSection('contacts')}
+                className="text-left text-sm font-medium text-gray-700"
+              >
+                Контакты
+              </button>
+            </nav>
+          </div>
+        )}
       </header>
 
-      <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Системная интеграция
-              <br />
-              <span className="text-primary">нового уровня</span>
+      <section className="pt-32 lg:pt-40 pb-20 lg:pb-32 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-4xl">
+            <h1 className="text-5xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
+              Продажа, внедрение<br />и поддержка <span className="text-primary">1С</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Комплексные ИТ-решения для автоматизации бизнес-процессов. Внедрение 1С, разработка
-              веб-приложений, техническая поддержка.
+            <p className="text-xl lg:text-2xl text-gray-600 mb-12 max-w-2xl leading-relaxed">
+              Создаём интернет-магазины и автоматизируем бизнес-процессы с помощью 1С:Предприятие
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => scrollToSection('услуги')} className="text-base">
-                Наши услуги
-                <Icon name="ArrowRight" className="ml-2" size={20} />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => scrollToSection('проекты')}
-                className="text-base"
-              >
-                Портфолио проектов
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="услуги" className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Наши услуги</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Полный спектр услуг по автоматизации и цифровой трансформации бизнеса
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <CardContent className="p-6">
-                  <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                    <Icon name={service.icon} className="text-primary" size={28} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-muted-foreground">{service.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="проекты" className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Реализованные проекты</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Успешные кейсы внедрения и автоматизации
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <Card key={index} className="overflow-hidden group hover:shadow-xl transition-all">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <Icon name="FolderOpen" size={64} className="text-primary/40" />
-                </div>
-                <CardContent className="p-6">
-                  <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-3">
-                    {project.tag}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">{project.client}</p>
-                  <p className="text-muted-foreground">{project.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="о-компании" className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">О компании</h2>
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
-                <div className="text-5xl font-bold text-primary mb-2">15+</div>
-                <div className="text-muted-foreground">лет на рынке</div>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-bold text-primary mb-2">500+</div>
-                <div className="text-muted-foreground">реализованных проектов</div>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-bold text-primary mb-2">50+</div>
-                <div className="text-muted-foreground">специалистов в штате</div>
-              </div>
-            </div>
-            <div className="prose prose-lg max-w-none">
-              <p className="text-lg text-muted-foreground text-center mb-6">
-                RunSystems — ведущий системный интегратор, специализирующийся на комплексной
-                автоматизации бизнес-процессов. Мы предлагаем полный цикл услуг от консалтинга и
-                разработки до внедрения и технической поддержки.
-              </p>
-              <p className="text-lg text-muted-foreground text-center">
-                Наша команда — это опытные профессионалы, которые работают на результат. Мы
-                используем передовые технологии и лучшие практики индустрии для решения самых
-                сложных задач.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="карьера" className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Карьера в RunSystems</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Присоединяйтесь к команде профессионалов
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto space-y-4">
-            {vacancies.map((vacancy, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-lg transition-all cursor-pointer hover:border-primary"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-1">{vacancy.title}</h3>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Icon name="Briefcase" size={16} />
-                          {vacancy.level}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Icon name="Code2" size={16} />
-                          {vacancy.tech}
-                        </span>
-                      </div>
-                    </div>
-                    <Icon
-                      name="ChevronRight"
-                      className="text-muted-foreground group-hover:text-primary transition-colors"
-                      size={24}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-muted-foreground mb-4">
-              Не нашли подходящую вакансию? Отправьте нам резюме!
-            </p>
-            <Button variant="outline" size="lg">
-              hr@runsystems.ru
-              <Icon name="Mail" className="ml-2" size={18} />
+            <Button
+              size="lg"
+              onClick={() => scrollToSection('contacts')}
+              className="px-8 py-6 text-base"
+            >
+              Получить консультацию
             </Button>
           </div>
         </div>
       </section>
 
-      <section id="контакты" className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Контакты</h2>
+      <section id="services" className="py-20 lg:py-32 px-6 lg:px-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-16 lg:mb-20 tracking-tight">
+            Наши услуги
+          </h2>
 
-            <div className="grid md:grid-cols-2 gap-12">
-              <div>
-                <h3 className="text-2xl font-semibold mb-6">Свяжитесь с нами</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Icon name="MapPin" className="text-primary mt-1" size={20} />
-                    <div>
-                      <div className="font-medium">Адрес</div>
-                      <div className="text-muted-foreground">
-                        г. Москва, ул. Примерная, д. 1, офис 100
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Icon name="Phone" className="text-primary mt-1" size={20} />
-                    <div>
-                      <div className="font-medium">Телефон</div>
-                      <div className="text-muted-foreground">+7 (495) 123-45-67</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Icon name="Mail" className="text-primary mt-1" size={20} />
-                    <div>
-                      <div className="font-medium">Email</div>
-                      <div className="text-muted-foreground">info@runsystems.ru</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Icon name="Clock" className="text-primary mt-1" size={20} />
-                    <div>
-                      <div className="font-medium">Режим работы</div>
-                      <div className="text-muted-foreground">Пн-Пт: 9:00 - 18:00</div>
-                    </div>
-                  </div>
+          <div className="space-y-1">
+            <div className="group border-b border-gray-200 py-8 lg:py-10 cursor-pointer hover:bg-white transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className="text-2xl lg:text-3xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    Продажа и внедрение 1С
+                  </h3>
+                  <p className="text-gray-600 text-lg max-w-3xl">
+                    Поставка лицензий, настройка под задачи бизнеса, обучение персонала и миграция данных
+                  </p>
+                </div>
+                <div className="hidden lg:block text-6xl font-light text-gray-300 group-hover:text-primary transition-colors">
+                  01
                 </div>
               </div>
+            </div>
 
-              <div>
-                <h3 className="text-2xl font-semibold mb-6">Напишите нам</h3>
-                <form className="space-y-4">
-                  <Input placeholder="Ваше имя" />
-                  <Input type="email" placeholder="Email" />
-                  <Input placeholder="Телефон" />
-                  <Textarea placeholder="Сообщение" rows={4} />
-                  <Button className="w-full" size="lg">
-                    Отправить
-                    <Icon name="Send" className="ml-2" size={18} />
-                  </Button>
-                </form>
+            <div className="group border-b border-gray-200 py-8 lg:py-10 cursor-pointer hover:bg-white transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className="text-2xl lg:text-3xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    Создание интернет-магазинов
+                  </h3>
+                  <p className="text-gray-600 text-lg max-w-3xl">
+                    Разработка e-commerce решений с интеграцией в 1С, CRM и платёжные системы
+                  </p>
+                </div>
+                <div className="hidden lg:block text-6xl font-light text-gray-300 group-hover:text-primary transition-colors">
+                  02
+                </div>
+              </div>
+            </div>
+
+            <div className="group border-b border-gray-200 py-8 lg:py-10 cursor-pointer hover:bg-white transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className="text-2xl lg:text-3xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    Техническая поддержка
+                  </h3>
+                  <p className="text-gray-600 text-lg max-w-3xl">
+                    Сопровождение 1С, доработка конфигураций, обновление версий и консультации
+                  </p>
+                </div>
+                <div className="hidden lg:block text-6xl font-light text-gray-300 group-hover:text-primary transition-colors">
+                  03
+                </div>
+              </div>
+            </div>
+
+            <div className="group border-b border-gray-200 py-8 lg:py-10 cursor-pointer hover:bg-white transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className="text-2xl lg:text-3xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    Автоматизация процессов
+                  </h3>
+                  <p className="text-gray-600 text-lg max-w-3xl">
+                    Настройка документооборота, складского учёта, управления производством
+                  </p>
+                </div>
+                <div className="hidden lg:block text-6xl font-light text-gray-300 group-hover:text-primary transition-colors">
+                  04
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="bg-foreground text-white py-12 px-4">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">RS</span>
+      <section id="cases" className="py-20 lg:py-32 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-16 lg:mb-20 tracking-tight">Проекты</h2>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+            <div className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl mb-6 overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-8xl opacity-10">🏪</div>
                 </div>
-                <span className="font-bold text-xl">RunSystems</span>
               </div>
-              <p className="text-sm text-white/70">
-                Системная интеграция и автоматизация бизнеса
-              </p>
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-primary">E-COMMERCE</div>
+                <h3 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+                  Интернет-магазин электроники
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Разработали полноценный интернет-магазин с интеграцией в 1С:УТ, онлайн-оплатой и
+                  личным кабинетом клиента
+                </p>
+              </div>
             </div>
 
-            <div>
-              <h4 className="font-semibold mb-4">Услуги</h4>
-              <ul className="space-y-2 text-sm text-white/70">
-                <li>Системная интеграция</li>
-                <li>Внедрение 1C</li>
-                <li>Разработка веб-решений</li>
-                <li>Техподдержка</li>
-              </ul>
+            <div className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl mb-6 overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-8xl opacity-10">📊</div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-primary">АВТОМАТИЗАЦИЯ</div>
+                <h3 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+                  Учёт для производства
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Внедрили 1С:ERP для полного цикла производства — от закупок до склада готовой
+                  продукции
+                </p>
+              </div>
             </div>
 
-            <div>
-              <h4 className="font-semibold mb-4">Компания</h4>
-              <ul className="space-y-2 text-sm text-white/70">
-                <li>О нас</li>
-                <li>Проекты</li>
-                <li>Карьера</li>
-                <li>Контакты</li>
-              </ul>
+            <div className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl mb-6 overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-8xl opacity-10">🚚</div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-primary">ЛОГИСТИКА</div>
+                <h3 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+                  Система для транспортной компании
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Создали решение для управления автопарком и маршрутами доставки на базе 1С
+                </p>
+              </div>
             </div>
 
-            <div>
-              <h4 className="font-semibold mb-4">Контакты</h4>
-              <ul className="space-y-2 text-sm text-white/70">
-                <li>+7 (495) 123-45-67</li>
-                <li>info@runsystems.ru</li>
-                <li>Москва, ул. Примерная, 1</li>
-              </ul>
+            <div className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl mb-6 overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-8xl opacity-10">💼</div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-primary">CRM</div>
+                <h3 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+                  CRM для сферы услуг
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Настроили 1С:CRM с воронкой продаж, автоматической рассылкой и аналитикой
+                </p>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="border-t border-white/10 pt-8 text-center text-sm text-white/70">
-            <p>© 2024 RunSystems. Все права защищены.</p>
+      <section id="about" className="py-20 lg:py-32 px-6 lg:px-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-8 tracking-tight">О компании</h2>
+              <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
+                <p>
+                  RunSystems — команда специалистов по автоматизации бизнеса с опытом работы более
+                  15 лет. Мы являемся официальным партнёром 1С и помогаем компаниям повышать
+                  эффективность с помощью современных ИТ-решений.
+                </p>
+                <p>
+                  Наша экспертиза охватывает внедрение 1С, разработку интернет-магазинов,
+                  интеграцию систем и техническую поддержку. Мы работаем с малым и средним бизнесом
+                  по всей России.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <div className="text-5xl lg:text-6xl font-bold text-primary mb-3">500+</div>
+                <div className="text-gray-600">Выполненных проектов</div>
+              </div>
+              <div>
+                <div className="text-5xl lg:text-6xl font-bold text-primary mb-3">15</div>
+                <div className="text-gray-600">Лет на рынке</div>
+              </div>
+              <div>
+                <div className="text-5xl lg:text-6xl font-bold text-primary mb-3">200+</div>
+                <div className="text-gray-600">Довольных клиентов</div>
+              </div>
+              <div>
+                <div className="text-5xl lg:text-6xl font-bold text-primary mb-3">24/7</div>
+                <div className="text-gray-600">Техническая поддержка</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacts" className="py-20 lg:py-32 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-12 tracking-tight">Контакты</h2>
+
+              <div className="space-y-8">
+                <div>
+                  <div className="text-sm font-medium text-gray-500 mb-2">ТЕЛЕФОН</div>
+                  <a
+                    href="tel:+74951234567"
+                    className="text-2xl font-semibold hover:text-primary transition-colors"
+                  >
+                    +7 (495) 123-45-67
+                  </a>
+                </div>
+
+                <div>
+                  <div className="text-sm font-medium text-gray-500 mb-2">EMAIL</div>
+                  <a
+                    href="mailto:info@runsystems.ru"
+                    className="text-2xl font-semibold hover:text-primary transition-colors"
+                  >
+                    info@runsystems.ru
+                  </a>
+                </div>
+
+                <div>
+                  <div className="text-sm font-medium text-gray-500 mb-2">АДРЕС</div>
+                  <div className="text-xl text-gray-700">
+                    г. Москва, ул. Примерная, д. 1<br />
+                    офис 100
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-sm font-medium text-gray-500 mb-2">РЕЖИМ РАБОТЫ</div>
+                  <div className="text-xl text-gray-700">
+                    Пн-Пт: 9:00 — 18:00<br />
+                    Сб-Вс: выходной
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <form className="space-y-6">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Ваше имя"
+                    className="w-full px-0 py-4 border-0 border-b-2 border-gray-200 focus:border-primary focus:ring-0 text-lg placeholder:text-gray-400 transition-colors bg-transparent"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    placeholder="Телефон"
+                    className="w-full px-0 py-4 border-0 border-b-2 border-gray-200 focus:border-primary focus:ring-0 text-lg placeholder:text-gray-400 transition-colors bg-transparent"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full px-0 py-4 border-0 border-b-2 border-gray-200 focus:border-primary focus:ring-0 text-lg placeholder:text-gray-400 transition-colors bg-transparent"
+                  />
+                </div>
+                <div>
+                  <textarea
+                    placeholder="Сообщение"
+                    rows={4}
+                    className="w-full px-0 py-4 border-0 border-b-2 border-gray-200 focus:border-primary focus:ring-0 text-lg placeholder:text-gray-400 transition-colors resize-none bg-transparent"
+                  ></textarea>
+                </div>
+                <Button size="lg" className="px-8 py-6 text-base">
+                  Отправить заявку
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-12 px-6 lg:px-12 border-t">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div className="text-2xl font-bold">RunSystems</div>
+            <div className="text-sm text-gray-500">
+              © 2024 RunSystems. Все права защищены.
+            </div>
           </div>
         </div>
       </footer>
